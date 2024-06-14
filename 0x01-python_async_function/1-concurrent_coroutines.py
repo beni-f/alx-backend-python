@@ -15,7 +15,7 @@ async def wait_n(n, max_delay):
 
     sorted_results = []
     while results:
-        min_result = min()
+        min_result = min(results)
         sorted_results.append(min_result)
         results.remove(min_result)
 
