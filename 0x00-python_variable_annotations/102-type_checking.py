@@ -5,7 +5,7 @@
 from typing import Tuple, List, Optional
 
 
-def zoom_array(lst: Tuple, factor: int = 2) -> List[int]:
+def zoom_array(lst: Tuple, factor: int = 2) -> List:
     """
         Zoom Array
     """
@@ -18,6 +18,6 @@ def zoom_array(lst: Tuple, factor: int = 2) -> List[int]:
 
 array: Tuple[int, int, int] = (12, 72, 91)
 
-zoom_2x: List[int] = zoom_array(array)
+zoom_2x: List = zoom_array(array)
 
-zoom_3x: List[int] = zoom_array(array, 3)
+zoom_3x: List = zoom_array(array, 3)
