@@ -3,6 +3,7 @@
     Parameterize a unit test
 """
 import unittest
+from unittest.mock import patch, Mock
 import utils
 from parameterized import parameterized
 
@@ -27,3 +28,23 @@ class TestAccessNestedMap(unittest.TestCase):
     def test_access_nested_map_exception(self, nested_map, path):
         with self.assertRaises(KeyError):
             utils.access_nested_map(nested_map, path)
+
+
+class TestGetJson(unittest.TestCase):
+    """Tests the utils.get_json method"""
+    @patch("utils.requests.get")
+    def test_get_json(self, mock_get):
+        """ Test """
+        test_cases = [
+            ('http://example.com', {"payload": True}),
+            ('http://holberton.io', {"payload": False})
+        ]
+
+        for test_url, test_payload in test_cases:
+            response = Mock()
+            response.json.return_value = test_payload
+            mock_get.return_value = response
+
+            result = utils.get_json(test_url)
+
+            self.assertEqual(result, test_payload)
