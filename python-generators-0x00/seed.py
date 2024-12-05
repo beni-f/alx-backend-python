@@ -60,7 +60,6 @@ def insert_data(connection, data):
         cursor = connection.cursor()
         with open(data, 'r') as file:
             reader = csv.DictReader(file)
-            print(reader)
             for row in reader:
                 user_id = str(uuid.uuid4())
                 insert_query = """
