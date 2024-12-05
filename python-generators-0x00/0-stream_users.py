@@ -13,6 +13,3 @@ def stream_users():
                 'email': row['email'],
                 'age': row['age'],
             }
-
-for user in islice(stream_users(), 6):
-    print(user)
