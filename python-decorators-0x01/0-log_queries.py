@@ -4,14 +4,12 @@ import sqlite3
 import functools
 
 def log_queries(orig_func):
-    import logging
-    logging.basicConfig(filename='users.log', level=logging.INFO)
     @functools.wraps(orig_func)
     def wrapper(*args, **kwargs):
-        query = args[0]
+        from datetime import datetime
         result = orig_func(*args, **kwargs)
-        logging.info(f"Executing Query: {query}")
-        logging.info(f"Query result: {result}")
+        print(result)
+        print("Completed at: {}".format(datetime.now()))
         return result
     return wrapper
 
