@@ -17,3 +17,4 @@ with DatabaseConnection() as conn:
     result = cursor.fetchall()
 
 print(result)
+
