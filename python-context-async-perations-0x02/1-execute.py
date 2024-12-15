@@ -18,5 +18,5 @@ class ExecuteQuery:
     def __exit__(self, exc_type, exc_value, traceback):
         self.conn.close()
 
-with ExecuteQuery("SELECT * FROM user WHERE name = ?", 'MqdQWrBk') as result:
+with ExecuteQuery("SELECT * FROM users WHERE age > ?", 40) as result:
     print(result)

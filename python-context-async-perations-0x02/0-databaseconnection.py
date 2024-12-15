@@ -13,7 +13,7 @@ class DatabaseConnection:
 
 with DatabaseConnection() as conn:
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM user")
+    cursor.execute("SELECT * FROM users")
     result = cursor.fetchall()
 
 print(result)

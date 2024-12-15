@@ -6,7 +6,7 @@ def create_user_db():
     conn = sqlite3.connect('user.db')
     cursor = conn.cursor()
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS user(
+        CREATE TABLE IF NOT EXISTS users(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE,
@@ -29,7 +29,7 @@ def insert_random_users(num_users):
     for _ in range(num_users):
         name, email, age = generate_random_user()
         try:
-            cursor.execute("INSERT INTO user (name, email, age) VALUES (?, ?, ?)", (name, email, age))
+            cursor.execute("INSERT INTO users (name, email, age) VALUES (?, ?, ?)", (name, email, age))
         except sqlite3.IntegrityError:
             # Handle cases where email is not unique
             print(f"Failed to insert user with email: {email} (likely duplicate)")
