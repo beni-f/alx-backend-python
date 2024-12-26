@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import get_user_model
+import uuid
 
 class Role(models.TextChoices):
     GUEST = 'Guest', 'Guest'
@@ -15,6 +16,7 @@ class User(AbstractUser):
     created_at = models.DateTimeField(auto_created=True)
 
 class Message(models.Model):
+    message_id = models.UUIDField(max_length=36, primary_key=True, unique=True, db_index=True, default=uuid.uuid4())
     message_body = models.TextField(max_length=255, null=False)
     sent_at = models.DateTimeField(auto_now=True)
     sender_id = models.ForeignKey(
@@ -23,7 +25,7 @@ class Message(models.Model):
     )
 
 class Conversation(models.Model):
-    id = models.UUIDField(max_length=36, primary_key=True, unique=True, db_index=True)
+    conversation_id = models.UUIDField(max_length=36, primary_key=True, unique=True, db_index=True, default=uuid.uuid4())
     created_at = models.DateTimeField(auto_now=True)
     participants_id = models.ForeignKey(
         get_user_model(),
