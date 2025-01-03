@@ -4,29 +4,26 @@ from rest_framework import serializers
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id', 'first_name', 'last_name', 'username', 'email', 'role', 'phone_number']
 
 class ConversationSerializer(serializers.ModelSerializer):
-    participants = UserSerializer(many=True)
     class Meta:
         model = Conversation
-        fields = ['conversation_id', 'participants']
+        fields = ['participants_id', 'created_at']
 
 class MessageSerializer(serializers.ModelSerializer):
-    conversation = ConversationSerializer()
-    sender = UserSerializer()
+    conversation = serializers.PrimaryKeyRelatedField(
+        queryset = Conversation.objects.all(),
+        write_only=True
+    )
+    
     class Meta:
         model = Message
-        fields = ['message_id', 'conversation', 'sender']
+        fields = ['conversation', 'message_id', 'sender_id', 'message_body', 'sent_at']
+        extra_kwargs = {'message_id': {'read_only': True}}
 
     def create(self, validated_data):
-        conversation_data = validated_data.pop('conversation')
-        sender_data = validated_data.pop('sender')
-
+        conversation_data = self.validated_data.pop('conversation')
         conversation, _ = Conversation.objects.get_or_create(**conversation_data)
-
-        sender, _ = User.objects.get_or_create(**sender_data)
-
-        message = Message.objects.create(conversation=conversation, sender=sender, **validated_data)
-
+        message, _ = Message.objects.create(conversation=conversation, **validated_data)
         return message

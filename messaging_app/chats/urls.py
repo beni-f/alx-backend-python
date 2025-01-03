@@ -1,12 +1,8 @@
-from django.urls import path, include
-from rest_framework import routers
+from rest_framework.routers import DefaultRouter
 from .views import MessageViewSet, ConversationViewSet
 
-router = routers.DefaultRouter()
-router.register(r'messages', MessageViewSet, basename='message')
-router.register(r'conversations', ConversationViewSet, basename='conversation')
+router = DefaultRouter()
+router.register(r'message', MessageViewSet, basename='message')
+router.register(r'conversation', ConversationViewSet, basename='conversation')
 
-urlpatterns =[
-    path('', include(router.urls)),
-    path('api-auth', include('rest_framework.urls')),
-]
+urlpatterns = router.urls
