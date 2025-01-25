@@ -1,31 +1,38 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import get_user_model
-
-class Role(models.TextChoices):
-    GUEST = 'Guest', 'Guest'
-    HOST = 'Host', 'Host'
-    ADMIN = 'Admin', 'Admin'
-
+import uuid 
 # Create your models here.
-class User(AbstractUser):
-    email = models.CharField(max_length=64, unique=True)
-    role = models.TextField(choices=Role, default=Role.GUEST, null=False)
-    phone_number = models.CharField(max_length=15, null=True, blank=True)
-    created_at = models.DateTimeField(auto_created=True)
+class Role(models.TextChoices):
+    GUEST = 'guest', 'guest'
+    HOST = 'host', 'host'
+    ADMIN = 'admin', 'admin'
 
-class Message(models.Model):
-    message_body = models.TextField(max_length=255, null=False)
-    sent_at = models.DateTimeField(auto_now=True)
-    sender_id = models.ForeignKey(
+class User(AbstractUser):
+    email = models.CharField(max_length=64, null=False, unique=True, db_index=True)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
+    role = models.CharField(max_length=15, choices=Role.choices, default=Role.GUEST, null=False)
+    created_at = models.DateTimeField(auto_now=True)
+
+class Conversation(models.Model):
+    conversation_id = models.UUIDField(primary_key=True, default=uuid.uuid4(), db_index=True)
+    participants_id = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE
     )
-
-class Conversation(models.Model):
-    id = models.UUIDField(max_length=36, primary_key=True, unique=True, db_index=True)
     created_at = models.DateTimeField(auto_now=True)
-    participants_id = models.ForeignKey(
+
+class Message(models.Model):
+
+    message_id = models.UUIDField(primary_key=True, default=uuid.uuid4(), db_index=True)
+    message_body = models.TextField(max_length=200, null=False)
+    sent_at = models.DateTimeField(auto_now=True)
+    conversation_id = models.ForeignKey(
+        Conversation,
+        models.CASCADE,
+        null=True
+    )
+    sender_id = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE
     )
