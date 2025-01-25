@@ -3,12 +3,20 @@ from rest_framework import viewsets, response, exceptions
 from rest_framework.permissions import IsAuthenticated
 from .models import Conversation, Message
 from .serializers import MessageSerializer, ConversationSerializer
+<<<<<<< HEAD
 from .permissions import IsSender, IsParticipantOfConversation
+=======
+from .permissions import IsSender
+
+>>>>>>> 5010b9b21672304982f426c4798bf9ae42587f96
 # Create your views here.
 class ConversationViewSet(viewsets.ModelViewSet):
     queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
+<<<<<<< HEAD
     permission_classes = IsParticipantOfConversation
+=======
+>>>>>>> 5010b9b21672304982f426c4798bf9ae42587f96
     def list(self, request):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
