@@ -11,9 +11,7 @@ services:
   web:
     build: ..
     container_name: messaging_app
-    command: gunicorn messaging_app.wsgi:application --bind 0.0.0.0:8000
-    ports:
-      - "8081:8000"
+    command: python3 manage.py runserver 0.0.0.0:8000
     depends_on:
       - db
     environment:
