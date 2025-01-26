@@ -1,0 +1,23 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: messaging_db
+    restart: always
+    env_file: .env
+    ports:
+      - 3306
+    volumes:
+      - db_data:/var/lib/mysql
+  web:
+    build: ..
+    container_name: messaging_app
+    command: gunicorn messaging_app.wsgi:application --bind 0.0.0.0:8000
+    ports:
+      - "8081:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+volumes:
+  db_data:
