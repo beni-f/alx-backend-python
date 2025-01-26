@@ -16,6 +16,10 @@ services:
       - "8081:8000"
     depends_on:
       - db
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_DB=${MYSQL_DB}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     env_file:
       - .env
 
