@@ -1,13 +1,9 @@
 from rest_framework.permissions import BasePermission
-<<<<<<< HEAD
-from rest_framework.permissions import SAFE_METHODS
-=======
->>>>>>> 5010b9b21672304982f426c4798bf9ae42587f96
 
+from rest_framework.permissions import SAFE_METHODS
 class IsSender(BasePermission):
     def has_object_permission(self, request, view, obj):
         return request.user == obj.sender_id
-<<<<<<< HEAD
 
 class IsParticipantOfConversation(BasePermission):
     def has_permission(self, request, view):
@@ -15,5 +11,3 @@ class IsParticipantOfConversation(BasePermission):
     
     def has_object_permission(self, request, view, obj):
         return request.user.id in obj.participants_id
-=======
->>>>>>> 5010b9b21672304982f426c4798bf9ae42587f96
