@@ -5,7 +5,7 @@ class RequestLoggingMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
         self.logger = logging.getLogger(__name__)
-        handler = logging.StreamHandler()
+        handler = logging.FileHandler(filename='requests.log')
         self.logger.addHandler(handler)
         self.logger.setLevel(logging.INFO)
 
