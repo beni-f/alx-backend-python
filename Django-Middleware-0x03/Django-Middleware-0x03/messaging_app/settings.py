@@ -61,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'chats.middleware.RequestLoggingMiddleware'
 ]
 
 ROOT_URLCONF = 'messaging_app.urls'
@@ -92,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('MYSQL_DB'),
         'USER': os.getenv('MYSQL_USER'),
-        'PASSWORD': os.getenv('MYSQL_ROOT_PASSWORD'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD', ''),
         'HOST': os.getenv('MYSQL_HOST', 'localhost'),
         'PORT': os.getenv('MYSQL_PORT', '3306')
     }
