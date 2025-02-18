@@ -48,3 +48,14 @@ class OffensiveLanguageMiddleware:
 
         response = self.get_response(request)
         return response
+    
+class RolepermissionMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+    
+    def __call__(self, request, *args, **kwds):
+        user = request.user
+        if not user.is_staff:
+            return HttpResponseForbidden("Can't access this page")
+        response = self.get_response(request)
+        return response
